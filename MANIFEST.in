@@ -1,2 +1,7 @@
 include LICENSE.txt
+
 exclude .editorconfig
+
+include tests/*.py
+include tests/testdata/*.fxp
+include tests/testdata/vst-*
