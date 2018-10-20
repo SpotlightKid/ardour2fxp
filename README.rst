@@ -74,15 +74,15 @@ Usage
 
 After installation, the ``ardour2fxp`` script can be used like this::
 
-    $ ardour2fxp ~/.config/ardour5/presets/vst-1094861636 my-presets
+    $ ardour2fxp -o my-presets ~/.config/ardour5/presets/vst-1094861636
 
 This will create an FXP (extension ``.fxp``) file for every preset in the
-Ardour preset file (``vst-1094861636`` in the example above). FXP files will
-be put into sub-directories of the output directory given as the second command
-line argument (``my-presets`` in the example). The FXP files will be named
-after the preset label (with spaces replaced with underscores) and the
-sub-directories will be named after the plug-in identifier (``1094861636`` ->
-``"ABCD"`` in the example).
+Ardour preset file(s) given on the command line (``vst-1094861636`` in the
+example above). FXP files will be put into sub-directories of the output
+directory given with the ``-o`` command line option (``my-presets`` in the
+example). The FXP files will be named after the preset label (with spaces
+replaced with underscores) and the sub-directories will be named after the
+plug-in identifier (``1094861636`` -> ``"ABCD"`` in the example).
 
 
 Contributing
