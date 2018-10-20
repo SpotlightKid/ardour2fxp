@@ -1,10 +1,10 @@
 ardour2fxp
 ##########
 
-Convert an Ardour VST presets XML file to VST2 FXP preset files.
+Convert between Ardour XML and binary FXP VST preset files.
 
 .. warning::
-    **This is still alpha-stage software and not yet fully functional!**
+    This is software is still in **beta stage**. Use at your own risk!
 
 |version| |status| |license| |python_versions| |formats| |wheel|
 
@@ -45,6 +45,9 @@ users of Ardour and those propietary DAWs.
 The ``ardour2fxp`` script converts Ardour VST preset XML files to FXP preset
 files, so the presets can be imported when using the plug-in in another DAW.
 
+The ``fxp2ardour`` script converts FXP preset files to Ardour VST preset XML
+files. FXB preset bank files are currently not supported.
+
 
 Getting Started
 ===============
@@ -72,17 +75,46 @@ or directly from the source code::
 Usage
 =====
 
-After installation, the ``ardour2fxp`` script can be used like this::
 
-    $ ardour2fxp -o my-presets ~/.config/ardour5/presets/vst-1094861636
+``ardour2fxp``
+--------------
+
+The ``ardour2fxp`` script can be used like this::
+
+    $ ardour2fxp -o my-vst-presets ~/.config/ardour5/presets/vst-1094861636
 
 This will create an FXP (extension ``.fxp``) file for every preset in the
 Ardour preset file(s) given on the command line (``vst-1094861636`` in the
 example above). FXP files will be put into sub-directories of the output
-directory given with the ``-o`` command line option (``my-presets`` in the
-example). The FXP files will be named after the preset label (with spaces
+directory given with the ``-o`` command line option (``my-vst-presets`` in
+the example). The FXP files will be named after the preset label (with spaces
 replaced with underscores) and the sub-directories will be named after the
-plug-in identifier (``1094861636`` -> ``"ABCD"`` in the example).
+plug-in identifier (``1094861636`` -> ``"ABCD"`` in the example). Existing
+files will not be overwritten (unless the ``-f`` / ``--force`` command line
+option is given).
+
+
+``fxp2ardour``
+--------------
+
+The ``fxp2ardour`` script can be used like this::
+
+    $ fxp2ardour2 -o ardour-presets my-vst-presets/*.fxp
+
+This will create Ardour VST preset XML files for all presets in the FXP file(s)
+given on the command line. The Ardour preset files will be placed in the output
+directory given with the ``-o`` command line option (``ardour-presets`` in the
+example above, defaults to the current directory). One Ardour preset file will
+be created per plugin and will be named ``"vst-"`` plus the plugin identifier
+interpreted as a signed integer (e.g. ``vst-1094861636`` when the plugin
+identifier is ``"ABCD"``). Existing files will not be overwritten (unless the
+``-f`` / ``--force`` command line option is given).
+
+The output files can be copied to the user's Ardour preset directory, which
+is normally located at ``~/.config/ardour5/presets`` (assuming Ardour version
+5.x on a Linux system). Care must be taken not to overwrite existing user
+preset files. Appending to existing user preset files is currently not
+supported.
 
 
 Contributing

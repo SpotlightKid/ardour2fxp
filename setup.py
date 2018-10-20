@@ -16,7 +16,7 @@ def read(*paths):
 
 
 classifiers = """
-Development Status :: 3 - Alpha
+Development Status :: 4 - Beta
 Environment :: Console
 Intended Audience :: End Users/Desktop
 License :: OSI Approved :: MIT License
@@ -36,17 +36,18 @@ Topic :: Utilities
 
 setup(
     name='ardour2fxp',
-    version="0.1.0a1",
-    description=read('README.rst').splitlines()[0],
+    version="0.1.0b1",
+    description=read('README.rst').splitlines()[3],
     long_description="\n".join(read('README.rst').splitlines()[3:]),
     author="Christopher Arndt",
     author_email="info@chrisarndt.de",
     url="https://github.com/SpotlightKid/ardour2fxp",
-    py_modules=["ardour2fxp"],
+    py_modules=["ardour2fxp", "fxp2ardour"],
     install_requires=[],
     entry_points={
         "console_scripts": [
-            "ardour2fxp = ardour2fxp:main"
+            "ardour2fxp = ardour2fxp:main",
+            "fxp2ardour = fxp2ardour:main"
         ]
     },
     classifiers=[c.strip() for c in classifiers.splitlines()

@@ -3,7 +3,7 @@
 #
 # ardour2fxp.py
 #
-"""Convert an Ardour VST presets XML file to VST2 FXP preset files."""
+"""Convert one or more Ardour VST presets XML file to VST2 FXP preset files."""
 
 import argparse
 import os
