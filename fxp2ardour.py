@@ -44,31 +44,39 @@ FXPHeader = namedtuple(
 )
 
 
+class FXPParseException(Exception):
+    """Raised when there is an error parsing FXP file data."""
+
+
 def parse_fxp(fn):
-    """Parse VST2 FXp preset file.
+    """Parse VST2 FXP preset file.
 
     Returns list of Preset or ChunkPreset instances.
 
     """
     with open(fn, 'rb') as fp:
         fxp = FXPHeader(*unpack(FXP_HEADER_FMT, fp.read(FXP_HEADER_SIZE)))
-        assert fxp.magic == CHUNK_MAGIC
+        if fxp.magic != CHUNK_MAGIC:
+            raise FXPParseException("Invalid magic header bytes for FXP file.")
         label = fxp.label.rstrip(b'\0').decode('latin1')
 
         if fxp.type == FX_MAGIC_PARAMS:
             params_fmt = '>{:d}f'.format(fxp.num_params)
             params = unpack(params_fmt, fp.read(calcsize(params_fmt)))
-            assert len(params) == fxp.num_params  # XXX
             preset = Preset('VST', fxp.plugin_id, fxp.plugin_version,
                             None, label, fxp.num_params, params)
         elif fxp.type == FX_MAGIC_CHUNK:
             chunk_size = unpack('>i', fp.read(calcsize('>i')))[0]
             chunk = fp.read(chunk_size)
-            assert len(chunk) == chunk_size
+            if len(chunk) != chunk_size:
+                raise FXPParseException(
+                    "Program chunk data truncated, expected {:d} bytes, "
+                    "read {:d}.".format(chunk_size, len(chunk)))
             preset = ChunkPreset('VST', fxp.plugin_id, fxp.plugin_version,
                                  None, label, fxp.num_params, chunk)
         else:
-            raise ValueError("FXP type '{}' not supported.".format(fxp.type))
+            raise FXPParseException("Invalid program type magic bytes. Type "
+                                    "'{}' not supported.".format(fxp.type))
 
     return preset
 
