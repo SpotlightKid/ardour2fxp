@@ -101,7 +101,6 @@ def main(args=None):
         try:
             preset = parse_fxp(infile)
         except Exception as exc:
-            raise
             return "Error reading FXP preset file '{}': {}".format(
                     infile, exc)
         else:
