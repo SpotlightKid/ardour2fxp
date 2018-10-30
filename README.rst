@@ -104,17 +104,32 @@ The ``fxp2ardour`` script can be used like this::
 This will create Ardour VST preset XML files for all presets in the FXP file(s)
 given on the command line. The Ardour preset files will be placed in the output
 directory given with the ``-o`` command line option (``ardour-presets`` in the
-example above, defaults to the current directory). One Ardour preset file will
-be created per plugin and will be named ``"vst-"`` plus the plugin identifier
-interpreted as a signed integer (e.g. ``vst-1094861636`` when the plugin
-identifier is ``"ABCD"``). Existing files will not be overwritten (unless the
-``-f`` / ``--force`` command line option is given).
+example above, defaults to the current directory). One Ardour preset file per
+plugin will be written. Each Ardour preset file is named with a ``"vst-"``
+prefix plus the plugin identifier interpreted as a signed integer (e.g. when 
+the plugin identifier is ``"ABCD"``, the file name will be ``vst-1094861636``).
+Existing files will not be changed or overwritten, unless one of the 
+``-f`` / ``--force``, ``-a`` / ``--append`` or ``-m`` / ``--merge`` command 
+line options are used.
 
 The output files can be copied to the user's Ardour preset directory, which
 is normally located at ``~/.config/ardour5/presets`` (assuming Ardour version
 5.x on a Linux system). Care must be taken not to overwrite existing user
-preset files. Appending to existing user preset files is currently not
-supported.
+preset files.
+
+To append the converted FXP presets to (an) existing Ardour preset file(s), use
+the command line option ``-a`` / ``--append`` and set the output directory to
+the one containing the ardour preset file(s). Existing presets in the Ardour
+preset file(s) will not be changed.
+
+With the ``-m`` / ``--merge`` command line option you can merge the converted FXP
+presets into (an) existing Ardour preset file(s). This means that existing presets
+in the Ardour preset file(s) with the same label as a converted preset for the 
+same plugin, will be be replaced with the latter.
+
+CAUTION: If you have several existing presets in an Ardour preset file with the 
+same label or several converted FXP presets with the same name for the same plugin,
+it can be difficult to determine, which preset is overwriten by which.
 
 
 Contributing

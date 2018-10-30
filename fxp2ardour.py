@@ -86,8 +86,16 @@ def main(args=None):
     argparser.add_argument('-v', '--fx-version', type=int,
                            default=FX_DEFAULT_VERSION,
                            help="VST plugin version number")
+    argparser.add_argument('-a', '--append', action="store_true",
+                           help="Append presets to existing Ardour preset "
+                                "file(s), if applicable")
     argparser.add_argument('-f', '--force', action="store_true",
                            help="Overwrite existing destination file(s)")
+    argparser.add_argument('-m', '--merge', action="store_true",
+                           help="Merge presets into existing Ardour preset "
+                                "file(s), if applicable. Existing presets with "
+                                "the same name for the same plugin are "
+                                "overwritten. USE WITH CARE!")
     argparser.add_argument('-o', '--output-dir',
                            help="Ardour presets output directory")
     argparser.add_argument('infiles', nargs='*',
@@ -111,25 +119,45 @@ def main(args=None):
             os.makedirs(output_dir)
 
         xml_fn = join(output_dir, 'vst-{:010d}'.format(plugin))
-        if exists(xml_fn) and not args.force:
+        if exists(xml_fn) and not any((args.append, args.force, args.merge)):
             print("Ardour VST preset file '{}' already exists. "
                   "Skipping output.".format(xml_fn))
             continue
-
-        root = ET.Element('VSTPresets')
+        elif args.append or args.merge:
+            tree = ET.parse(xml_fn)
+            root = tree.getroot()
+            preset_nodes = {}
+            for node in root.childNodes:
+                if node.tag in ('Preset', 'ChunkPreset'):
+                    preset_nodes.setdefault(node.get('label'), []).append(node)
+        else:
+            root = ET.Element('VSTPresets')
+            preset_nodes = {}
 
         for i, preset in enumerate(presets[plugin]):
             sha1 = hashlib.sha1()
             sha1.update(bytes(preset.label, 'latin1'))
             sha1.update(bytes(str(i), 'ascii'))
-            pnode = ET.SubElement(
-                root,
-                'Preset' if isinstance(preset, Preset) else 'ChunkPreset',
-                uri='{}:{:010d}:x{}'.format('VST', plugin, sha1.hexdigest()),
-                label=preset.label,
-                version=str(preset.plugin_version),
-                numParams=str(preset.num_params)
-            )
+            uri = '{}:{:010d}:x{}'.format('VST', plugin, sha1.hexdigest())
+            tag = 'Preset' if isinstance(preset, Preset) else 'ChunkPreset'
+
+            if args.merge and preset.label in preset_nodes:
+                # replace next existing preset with same label
+                pnode = preset_nodes[preset.label].pop(0)
+                
+                # if no more presets with this label exist, remove the key
+                if not preset_nodes[preset.label]:
+                    del preset_nodes[preset.label]
+
+                pnode.clear()
+                pnode.tag = tag
+            else:
+                pnode = ET.SubElement(root, tag)
+
+            pnode.set('uri', uri)
+            pnode.set('label', preset.label)
+            pnode.set('version', str(preset.plugin_version))
+            pnode.set('numParams', str(preset.num_params))
 
             if isinstance(preset, Preset):
                 for j, param in enumerate(preset.params):
