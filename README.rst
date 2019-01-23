@@ -99,7 +99,7 @@ option is given).
 
 The ``fxp2ardour`` script can be used like this::
 
-    $ fxp2ardour2 -o ardour-presets my-vst-presets/*.fxp
+    $ fxp2ardour -o ardour-presets my-vst-presets/*.fxp
 
 This will create Ardour VST preset XML files for all presets in the FXP file(s)
 given on the command line. The Ardour preset files will be placed in the output
@@ -125,7 +125,7 @@ preset file(s) will not be changed.
 With the ``-m`` / ``--merge`` command line option you can merge the converted FXP
 presets into (an) existing Ardour preset file(s). This means that existing presets
 in the Ardour preset file(s) with the same label as a converted preset for the 
-same plugin, will be be replaced with the latter.
+same plugin will be be replaced with the latter.
 
 CAUTION: If you have several existing presets in an Ardour preset file with the 
 same label or several converted FXP presets with the same name for the same plugin,
@@ -154,7 +154,7 @@ about copyright and usage terms.
 Acknowledgments
 ===============
 
-The following ressources were used to implement this script:
+The following resources were used to implement this script:
 
 * Ardour sources (``vst_plugin.cc``)
 * VST SDK headers (``pluginterfaces/vst2.x/vstfxstore.h``)
