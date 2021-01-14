@@ -72,7 +72,7 @@ def parse_ardourpresets(root):
             if type != "VST":
                 raise ValueError
         except (KeyError, ValueError):
-            print("Invalid preset format: {uri}".format(p=preset.attrib))
+            print("Invalid preset format: {}".format(preset.attrib))
             continue
 
         if preset.tag == 'Preset':
