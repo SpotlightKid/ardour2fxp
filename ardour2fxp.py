@@ -47,7 +47,7 @@ def parse_ardourpresets(root):
     Returns list of Preset or ChunkPreset instances.
 
     """
-    if not root.tag == 'VSTPresets':
+    if root.tag != 'VSTPresets':
         raise ValueError("Root node must be 'VSTPresets'.")
 
     presets = []
