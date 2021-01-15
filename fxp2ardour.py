@@ -124,10 +124,17 @@ def main(args=None):
                   "Skipping output.".format(xml_fn))
             continue
         elif args.append or args.merge:
-            tree = ET.parse(xml_fn)
-            root = tree.getroot()
-            preset_nodes = {}
-            for node in root.childNodes:
+            try:
+                tree = ET.parse(xml_fn)
+                root = tree.getroot()
+                preset_nodes = {}
+                if root.tag != 'VSTPresets':
+                    raise ValueError("Root XML element must be 'VSTPresets'.")
+            except Exception as exc:
+                return ("Output file '{}' already exists, but does not seem to be an "
+                        "Ardour VST preset file. Cannot merge.\n{}".format(xml_fn, exc))
+
+            for node in root:
                 if node.tag in ('Preset', 'ChunkPreset'):
                     preset_nodes.setdefault(node.get('label'), []).append(node)
         else:
@@ -144,7 +151,7 @@ def main(args=None):
             if args.merge and preset.label in preset_nodes:
                 # replace next existing preset with same label
                 pnode = preset_nodes[preset.label].pop(0)
-                
+
                 # if no more presets with this label exist, remove the key
                 if not preset_nodes[preset.label]:
                     del preset_nodes[preset.label]
