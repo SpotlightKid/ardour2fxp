@@ -98,11 +98,15 @@ def main(args=None):
                                 "overwritten. USE WITH CARE!")
     argparser.add_argument('-o', '--output-dir',
                            help="Ardour presets output directory")
-    argparser.add_argument('infiles', nargs='*',
+    argparser.add_argument('infiles', nargs='*', metavar='FXP',
                            help="FXP preset (input) file(s)")
 
-    args = argparser.parse_args(args if args is not None else sys.argv[1:])
+    args = argparser.parse_args(args)
     output_dir = args.output_dir or os.getcwd()
+
+    if not args.infiles:
+        argparser.print_help()
+        return 2
 
     presets = {}
     for infile in args.infiles:
@@ -179,4 +183,4 @@ def main(args=None):
 
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv[1:]) or 0)
+    sys.exit(main() or 0)
