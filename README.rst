@@ -9,7 +9,7 @@ Convert between Ardour XML and binary FXP VST preset files.
 |version| |release-date| |status| |license| |python_versions| |format|
 
 .. |version| image:: https://shields.io/pypi/v/ardour2fxp
-    :target: https://pypi/projects/ardour2fxp
+    :target: https://pypi.org/project/ardour2fxp
     :alt: Latest version
 
 .. |release-date| image:: https://shields.io/github/release-date/SpotlightKid/ardour2fxp

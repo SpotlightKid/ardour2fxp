@@ -24,7 +24,7 @@ Project:
     * Update readme badges to us shields.io (badge.kloud51.com MIA).
     * Updated supported Python version to 3.6 - 3.9.
 
-.. _comment on ticket #1: https://github.com/SpotlightKid/ardour2fxp/issues/1#issuecomment-760437839
+
 .. _readme: ./README.rst
 
 
