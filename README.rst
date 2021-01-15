@@ -55,7 +55,7 @@ Getting Started
 Requirements
 ------------
 
-* Python 3.4+
+* Python 3.6+
 
 
 Installation

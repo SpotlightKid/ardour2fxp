@@ -5,7 +5,6 @@
 #
 """Setup file for ardour2fxp."""
 
-from io import open
 from os.path import join
 from setuptools import setup
 
@@ -25,10 +24,10 @@ Operating System :: Microsoft :: Windows
 Operating System :: POSIX :: Linux
 Programming Language :: Python
 Programming Language :: Python :: 3
-Programming Language :: Python :: 3.4
-Programming Language :: Python :: 3.5
 Programming Language :: Python :: 3.6
 Programming Language :: Python :: 3.7
+Programming Language :: Python :: 3.8
+Programming Language :: Python :: 3.9
 Programming Language :: Python :: 3 :: Only
 Topic :: Multimedia :: Sound/Audio
 Topic :: Utilities
@@ -36,7 +35,7 @@ Topic :: Utilities
 
 setup(
     name='ardour2fxp',
-    version="0.1.0b1",
+    version="0.2.0",
     description=read('README.rst').splitlines()[3],
     long_description="\n".join(read('README.rst').splitlines()[3:]),
     author="Christopher Arndt",
