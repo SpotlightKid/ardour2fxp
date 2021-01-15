@@ -114,6 +114,9 @@ def main(args=None):
             return "Error reading Ardour preset file '{}': {}".format(
                 infile, exc)
 
+        if not presets:
+            return "No valid presets found in input file(s)."
+
         for preset in presets:
             plugin_id = pack('>I', preset.plugin_id).decode('ascii')
             dstdir = join(output_dir, plugin_id)
