@@ -6,29 +6,29 @@ Convert between Ardour XML and binary FXP VST preset files.
 .. warning::
     This is software is still in **beta stage**. Use at your own risk!
 
-|version| |status| |license| |python_versions| |formats| |wheel|
+|version| |release-date| |status| |license| |python_versions| |format|
 
-.. |version| image:: http://badge.kloud51.com/pypi/v/ardour2fxp.svg
-    :target: https://pypi.org/project/ardour2fxp
+.. |version| image:: https://shields.io/pypi/v/ardour2fxp
+    :target: https://pypi/projects/ardour2fxp
     :alt: Latest version
 
-.. |status| image:: http://badge.kloud51.com/pypi/s/ardour2fxp.svg
+.. |release-date| image:: https://shields.io/github/release-date/SpotlightKid/ardour2fxp
+    :target: https://github.com/SpotlightKid/ardour2fxp/releases
     :alt: Status
 
-.. |license| image:: http://badge.kloud51.com/pypi/l/ardour2fxp.svg
+.. |status| image:: https://shields.io/pypi/status/ardour2fxp
+    :alt: Status
+
+.. |license| image:: https://shields.io/pypi/l/ardour2fxp
     :target: license.txt_
     :alt: MIT License
 
-.. |python_versions| image:: http://badge.kloud51.com/pypi/py_versions/ardour2fxp.svg
+.. |python_versions| image:: https://shields.io/pypi/pyversions/ardour2fxp.svg
     :alt: Python versions
 
-.. |formats| image:: http://badge.kloud51.com/pypi/f/ardour2fxp.svg
+.. |format| image:: https://shields.io/pypi/format/ardour2fxp
     :target: https://pypi.org/project/ardour2fxp/#files
-    :alt: Distribution formats
-
-.. |wheel| image:: http://badge.kloud51.com/pypi/w/ardour2fxp.svg
-    :target: https://pypi.org/project/ardour2fxp/#files
-    :alt: Wheel available
+    :alt: Distribution format
 
 
 Overview
